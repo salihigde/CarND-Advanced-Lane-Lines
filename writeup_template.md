@@ -149,7 +149,7 @@ I implemented this step in lines 20 through 23 in my code in `detectlines.py` in
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./video_outputs/output_project_video.mp4)
+Here's a [link to my video result](./videos_output/output_project_video.mp4)
 
 ---
 
