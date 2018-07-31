@@ -1,6 +1,4 @@
-## Writeup Template
-
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+## Advanced Lane Finding Writeup
 
 ---
 
@@ -45,7 +43,7 @@ You're reading it!
 
 #### 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
 
-The code for this step is contained in the file called `camera-calibration.py`).  
+The code for this step is contained in the file called `camera-calibration.py`.  
 
 I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
 
@@ -57,7 +55,7 @@ After looping for all images and collecting the object and image points I then u
 
 #### 1. Provide an example of a distortion-corrected image.
 
-After calling calibrateCamera function I get back the calibration matrix and the distortion coefficients and save it as a pickle file to use it for undistorting the test images. For undistorting an image I call `cv2.undistort` function at line 49 (inside `img-video-generation.py`) in my `thresholded_img_pipeline` function.
+After calling `cv2.calibrateCamera()` function I get back the calibration matrix and the distortion coefficients and save it as a pickle file to use it for undistorting the test images. For undistorting an image I call `cv2.undistort` function at line 49 (inside `img-video-generation.py`) in my `thresholded_img_pipeline` function.
 
 One of the undistorted image can be found below.
 ![alt text][image_undistorted]
@@ -72,7 +70,7 @@ Most challenging image was the one in below because of the shadows of the trees 
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
-The code for my perspective transform includes a function called `perspectiveTransform()`, which appears in lines 59 through 99 in the file `img-video-generation.py`.  The `perspectiveTransform()` function takes as inputs an image (`image`).  I chose the hardcode the source and destination points by doing an approximate calculation in the following manner:
+The code for my perspective transform includes in a function called `perspectiveTransform()`, which appears in lines 59 through 99 in the file `img-video-generation.py`.  The `perspectiveTransform()` function takes as inputs an image (`image`).  I chose the hardcode the source and destination points by doing an approximate calculation in the following manner:
 
 ```python
 mid_top_dist = .04
@@ -122,7 +120,7 @@ I verified that my perspective transform was working as expected by drawing the 
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-Then I used Sliding Window algorithm, at `find_lane_pixels` function (inside `detectlines.py`) I defined `9` windows with margin of `100px` and min pixel amount of `50` each to find the `leftx, lefty, rightx` and `righty`. After finding the points, in `fit_polynomial` function at 107 to 122, I used `A*y**2 + B*y + C` formula for both left and right lane points to fit my lane with a 2nd order polynomial kinda like this:
+Then I used Sliding Window algorithm, at `find_lane_pixels` function (inside `detectlines.py`) I defined `9` windows with margin of `100px` and min pixel amount of `50` each to find the `leftx, lefty, rightx` and `righty`. After finding the points, in `fit_polynomial` function at line 107 to 122, I used `A*y**2 + B*y + C` formula for both left and right lane points to fit my lane with a 2nd order polynomial kinda like this:
 
 _Note: After trying for a while I couldn't remove the noise which can be seen in top left of the image_
 
@@ -134,7 +132,7 @@ I did this at `measure_curvature_real` function in lines 142 through 151 in my c
 
 The function gets warped image size as a parameter. `xm_per_pix` and `ym_per_pix` are used for converting pixel to meters in real world. After finding left and right fitted points I use the curvature function to calculate left and right curvature separately and return the results by rounding them. Finally I took the average of left and right curvature to calculate the curvature from middle of the road.
 
-The function `add_radius_and_distance_to_img` in line 31 in my code in `detectlines.py` I took the x and y points that are near to car, in edge or the road lines. After finding that points I just took the average to find the center point of the car.
+The function `add_radius_and_distance_to_img` in line 31 in my code in `detectlines.py` I took the x and y points that are near to car, in the edge of road lines. After finding that points I just took the average to find the center point of the car.
 
 The function `add_radius_and_distance_to_img` in line 32 in my code in `detectlines.py` I used camera `center_center` points with the center of the image points to determine how far the car is from the center. In that line I multiplied the result by `xm_per_pix` to find real environment results and multiplied by `1000` to find result in `cm`
 
@@ -163,7 +161,7 @@ I spend a lot time on two topics. First one was the thresholding, finding the co
 
 On the other hand, since I am new to python and opencv itself it is time consuming to do research on python syntax and opencv functions usage description.
 
-Finally, in this project I picked to do the project in my local machine without Jupyter Notebook, thats why it took time to install Anaconda and setup my VS Code to start developing.
+Finally, in this project I picked to do the project in my local machine without using Jupyter Notebook, thats why it took time to install Anaconda and setup my VS Code to start developing.
 
 Because of the reasons I mentioned above, I didn't have time for following;
 
@@ -171,4 +169,4 @@ Because of the reasons I mentioned above, I didn't have time for following;
 2) Finding the trapezoid for warping image more effectively.
 3) Smoothing the lane detection to prevent line jumping
 
-Finally, for improvement in my project, I would have loved to work in [this article](https://airccj.org/CSCP/vol5/csit53211.pdf) and try to determine the curves more effectively.
+Finally, for improvement point in my project, I would have loved to work in [this article](https://airccj.org/CSCP/vol5/csit53211.pdf) and try to determine the curves more effectively in the shades or faded lanes.
