@@ -17,13 +17,13 @@ for fname in images:
     print("Processing: " + fname)
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
-    ret, corners = cv2.findChessboardCorners(gray, (9,6),None)
+    ret, corners = cv2.findChessboardCorners(gray, (9,6), None)
 
     if ret == True:
         objpoints.append(objp)
         imgpoints.append(corners)
 
-        img = cv2.drawChessboardCorners(img, (9,6), corners, ret)
+        #img = cv2.drawChessboardCorners(img, (9,6), corners, ret)
         cv2.waitKey(500)
 
 img = cv2.imread('camera_cal/calibration1.jpg')

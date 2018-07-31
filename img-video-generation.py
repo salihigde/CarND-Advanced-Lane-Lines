@@ -14,7 +14,7 @@ dist_pickle = pickle.load(open( "camera_cal/my_dist_pickle.p", "rb" ))
 mtx = dist_pickle["mtx"]
 dist = dist_pickle["dist"]
 
-def pipeline():
+def img_gen():
     images = glob.glob('test_images/test*.jpg')
 
     for i, fname in enumerate(images):
@@ -26,9 +26,15 @@ def pipeline():
         img_name = 'output_images/' + 'minv_output_' + warped_img_name  
         cv2.imwrite(img_name, result)
 
+def video_gen():
+    white_output = 'videos_output/output_project_video.mp4'
+    clip1 = VideoFileClip("project_video.mp4")
+    white_clip = clip1.fl_image(process_image)
+    white_clip.write_videofile(white_output, audio=False)
+
 def process_image(image):
     thresholded_img = thresholded_img_pipeline(image)
-    
+
     warped_img, Minv = perspectiveTransform(thresholded_img)
 
     params = Line()
@@ -37,12 +43,6 @@ def process_image(image):
     unwarped_weighted = detect_lines.process_line_detection()
 
     return detect_lines.add_radius_and_distance_to_img(unwarped_weighted)
-
-def video_gen():
-    white_output = 'videos_output/output_project_video.mp4'
-    clip1 = VideoFileClip("project_video.mp4")
-    white_clip = clip1.fl_image(process_image)
-    white_clip.write_videofile(white_output, audio=False)
 
 def thresholded_img_pipeline(image):
     ksize = 15
@@ -55,16 +55,6 @@ def thresholded_img_pipeline(image):
     combined[(((gradx == 1) & (grady == 1)) | (color_t == 1))] = 255
 
     return combined
-
-def undistort():
-    images = glob.glob('test_images/test*.jpg')
-    dist_pickle = pickle.load( open( "camera_cal/my_dist_pickle.p", "rb" ) )
-    mtx = dist_pickle["mtx"]
-    dist = dist_pickle["dist"]
-
-    for i, fname in enumerate(images):
-        img = cv2.imread(fname)
-        img = cv2.undistort(img, mtx, dist, None, mtx)
 
 def perspectiveTransform(image):
     imshape = image.shape
@@ -109,4 +99,4 @@ def perspectiveTransform(image):
     return warp, Minv
 
 video_gen()
-#pipeline()
+#img_gen()

@@ -43,3 +43,13 @@ def color_thresh(image, s_thresh=(0,255), v_thresh=(0,255)):
     combined[(s_binary == 1) & (l_binary == 1)] = 1
     
     return combined
+
+def undistort():
+    images = glob.glob('test_images/test*.jpg')
+    dist_pickle = pickle.load( open( "camera_cal/my_dist_pickle.p", "rb" ) )
+    mtx = dist_pickle["mtx"]
+    dist = dist_pickle["dist"]
+
+    for i, fname in enumerate(images):
+        img = cv2.imread(fname)
+        img = cv2.undistort(img, mtx, dist, None, mtx)
