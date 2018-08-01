@@ -128,7 +128,7 @@ _Note: After trying for a while I couldn't remove the noise which can be seen in
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this at `measure_curvature_real` function in lines 142 through 151 in my code in `detectlines.py`
+I did this at `measure_curvature_real` function in lines 145 through 153 in my code in `detectlines.py`
 
 The function gets warped image size as a parameter. `xm_per_pix` and `ym_per_pix` are used for converting pixel to meters in real world. After finding left and right fitted points I use the curvature function to calculate left and right curvature separately and return the results by rounding them. Finally I took the average of left and right curvature to calculate the curvature from middle of the road.
 
