@@ -134,7 +134,7 @@ The function gets warped image size as a parameter. `xm_per_pix` and `ym_per_pix
 
 The function `add_radius_and_distance_to_img` in line 31 in my code in `detectlines.py` I took the x and y points that are near to car, in the edge of road lines. After finding that points I just took the average to find the center point of the car.
 
-The function `add_radius_and_distance_to_img` in line 32 in my code in `detectlines.py` I used camera `center_center` points with the center of the image points to determine how far the car is from the center. In that line I multiplied the result by `xm_per_pix` to find real environment results and multiplied by `1000` to find result in `cm`
+The function `add_radius_and_distance_to_img` in line 32 in my code in `detectlines.py` I used camera `center_center` points with the center of the image points to determine how far the car is from the center. In that line I multiplied the result by `xm_per_pix` to find real environment results and multiplied by `100` to find result in `cm`
 
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
