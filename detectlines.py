@@ -27,9 +27,8 @@ class DetectLines:
     def add_radius_and_distance_to_img(self, result):
         width = result.shape[1]
 
-        xm_per_pix = 3.7/width
         camera_center = (self.params.left_fitx[-1] + self.params.right_fitx[-1])/2
-        center_diff = round(((camera_center - width/2) * xm_per_pix) * 1000, 1)
+        center_diff = round(((camera_center - width/2) * self.params.xm_per_pix) * 100, 1)
         car_pos = 'left'
         if(center_diff <= 0):
             car_pos = 'right'
@@ -120,6 +119,9 @@ class DetectLines:
 
         out_img[self.params.lefty, self.params.leftx] = [255, 0, 0]
         out_img[self.params.righty, self.params.rightx] = [0, 0, 255]
+
+        #img_name = 'output_images/colored_warped_' + str(i+1) + '.jpg'
+        #cv2.imwrite(img_name, out_img)
 
         return self.paint_road_to_green(out_img)
     

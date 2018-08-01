@@ -29,8 +29,11 @@ class Line():
         self.right_fitx = None
         self.ploty = None
 
-        self.ym_per_pix = 30/720
-        self.xm_per_pix = 3.7/700
+        self.ym_per_pix = None
+        self.xm_per_pix = None
+
+        self.lane_width_meters = 3.7
+        self.lane_heigth_meters = 30
 
         self.Minv = None
 
