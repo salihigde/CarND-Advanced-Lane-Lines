@@ -55,14 +55,14 @@ After looping for all images and collecting the object and image points I then u
 
 #### 1. Provide an example of a distortion-corrected image.
 
-After calling `cv2.calibrateCamera()` function I get back the calibration matrix and the distortion coefficients and save it as a pickle file to use it for undistorting the test images. For undistorting an image I call `cv2.undistort` function at line 49 (inside `img-video-generation.py`) in my `thresholded_img_pipeline` function.
+After calling `cv2.calibrateCamera()` function I get back the calibration matrix and the distortion coefficients and save it as a pickle file to use it for undistorting the test images. For undistorting an image I call `cv2.undistort` function at line 37 (inside `img-video-generation.py`).
 
 One of the undistorted image can be found below.
 ![alt text][image_undistorted]
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps inside `img-video-generation.py` at lines 50 through 57 in `thresholded_img_pipeline` function).  Here's an example of my output for this step. All helper functions regarding thresholding can be found inside `tutil.py` file.
+I used a combination of color and gradient thresholds to generate a binary image (thresholding steps inside `img-video-generation.py` at lines 55 through 63 in `thresholded_img_pipeline` function).  Here's an example of my output for this step. All helper functions regarding thresholding can be found inside `tutil.py` file.
 
 Most challenging image was the one in below because of the shadows of the trees it was hard to find proper filter to remove all the whites which were located on the road.
 
@@ -70,7 +70,7 @@ Most challenging image was the one in below because of the shadows of the trees 
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
-The code for my perspective transform includes in a function called `perspectiveTransform()`, which appears in lines 59 through 99 in the file `img-video-generation.py`.  The `perspectiveTransform()` function takes as inputs an image (`image`).  I chose the hardcode the source and destination points by doing an approximate calculation in the following manner:
+The code for my perspective transform includes in a function called `perspectiveTransform()`, which appears in lines 66 through 112 in the file `img-video-generation.py`.  The `perspectiveTransform()` function takes as inputs an image (`image`).  I chose the hardcode the source and destination points by doing an approximate calculation in the following manner:
 
 ```python
 mid_top_dist = .04
@@ -109,10 +109,10 @@ This resulted in the following source and destination points:
 
 | Source        | Destination   |
 |:-------------:|:-------------:|
-| 185.6, 673.2  | 335.6, 673.2   |
-| 588.8, 457.2  | 335.6,   0.    |
-| 691.2, 457.2  | 944.4,   0.    |
-| 1094.4,673.2  | 944.4, 673.2   |
+| 185.6, 673.2  | 305.6, 673.2  |
+| 588.8, 457.2  | 305.6   0.    |
+| 691.2, 457.2  | 305.6   0.    |
+| 1094.4,673.2  | 974.4 673.2   |
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
